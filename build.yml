@@ -1,0 +1,18 @@
+name: Android Buildozer APKon:push:branches:- mainworkflow_dispatch:jobs:build:runs-on: ubuntu-lateststeps:
+  - name: Checkout Code
+    uses: actions/checkout@v4
+
+  - name: Build and Deploy Kivy App (Buildozer)
+    uses: ArtemiusUA/buildozer-action@v1.4
+    with:
+      command: buildozer android debug
+      branch: master
+      # Las dependencias de Android son: python3, kivy, pygame, git
+      # El buildozer.spec ya tiene python3, kivy, pygame
+      dependencies: python3-setuptools python3-pip
+
+  - name: Upload Artifact
+    uses: actions/upload-artifact@v4
+    with:
+      name: 9-meses-mi-amor-apk
+      path: bin/*.apk
